@@ -57,7 +57,7 @@ export class flasho {
 
     static async getEmailTrigger(triggerName: string, config:any){
         try {
-            const response:any = await axios.get<any>(`http://localhost:8000/api/v1/manual_emial/${triggerName}`, config);
+            const response:any = await axios.get<any>(`http://localhost:8000/api/v1/manual_email/${triggerName}`, config);
             return response.data;
           } catch (error:any) {
             console.error(error);
