@@ -1,0 +1,35 @@
+{
+  "name": "flasho-demo",
+  "version": "1.0.0",
+  "description": "Manual Events Library",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mayankw16/flasho-demo.git"
+  },
+  "keywords": [
+    "flaso",
+    "Manual Events",
+    "Trigger"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mayankw16/flasho-demo/issues"
+  },
+  "homepage": "https://github.com/Mayankw16/flasho-demo#readme",
+  "devDependencies": {
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.2.0"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
