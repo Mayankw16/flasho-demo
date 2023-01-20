@@ -13,12 +13,13 @@ interface reqBodyType {
 }
 
 export class flasho {
+  private endpoint: string;
   private config: configType;
 
   trigger = async (triggerName: string, reqBody: reqBodyType) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/v1/manual_event/${triggerName}`,
+        `${this.endpoint}/api/v1/manual_event/${triggerName}`,
         JSON.stringify(reqBody),
         this.config
       );
@@ -28,7 +29,8 @@ export class flasho {
     }
   };
 
-  constructor(admin_secret_key: string) {
+  constructor(endpoint: string, admin_secret_key: string) {
+    this.endpoint = endpoint;
     this.config = {
       headers: {
         accept: "application/json",
