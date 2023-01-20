@@ -1,66 +1,40 @@
 import axios from "axios";
 
-interface EmailRequestBodyType {
-    to: {
-        id: number
-    },
-    payload: {
-        trigger_name: string,
-        receipient_addresses: Array<string>,
-        configuration: {
-            variables: any
-        }
-    }
+interface configType {
+  headers: {
+    accept: string;
+    "x-admin-secret-key": string;
+    "Content-Type": string;
+  };
 }
 
-interface SmsRequestBodyType {
-    to: {
-        id: number
-    },
-    payload: {
-        trigger_name: string,
-        receipient_phone: Array<string>,
-        configuration: {
-            variables: any
-        }
-    }
+interface reqBodyType {
+  variables: any;
 }
 
 export class flasho {
+  private config: configType;
 
-    static async createSmsTrigger(requestBody: SmsRequestBodyType, config:any) {
-        try {
-            const response:any = await axios.post<any>(`http://localhost:8000/api/v1/manual_sms/send_new_manual_templated_sms`, JSON.stringify(requestBody), config);
-            return response.data;
-          } catch (error:any) {
-            console.error(error);
-          }
-    };
+  trigger = async (triggerName: string, reqBody: reqBodyType) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/v1/manual_event/${triggerName}`,
+        JSON.stringify(reqBody),
+        this.config
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    static async createEmailTrigger(requestBody: EmailRequestBodyType, config:any) {
-        try {
-            const response:any = await axios.post<any>(`http://localhost:8000/api/v1/manual_email/send_new_manual_templated_email`, JSON.stringify(requestBody), config);
-            return response.data;
-          } catch (error:any) {
-            console.error(error);
-          }
+  constructor(admin_secret_key: string) {
+    this.config = {
+      headers: {
+        accept: "application/json",
+        "x-admin-secret-key": admin_secret_key,
+        "Content-Type": "application/json",
+      },
     };
-
-    static async getSmsTrigger(triggerName: string, config:any) {
-        try {
-            const response:any = await axios.get<any>(`http://localhost:8000/api/v1/manual_sms/${triggerName}`, config);
-            return response.data;
-          } catch (error:any) {
-            console.error(error);
-          }
-    };
-
-    static async getEmailTrigger(triggerName: string, config:any){
-        try {
-            const response:any = await axios.get<any>(`http://localhost:8000/api/v1/manual_email/${triggerName}`, config);
-            return response.data;
-          } catch (error:any) {
-            console.error(error);
-          }
-    };
+  }
 }
